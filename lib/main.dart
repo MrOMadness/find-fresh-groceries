@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue, // Primary theme color
         scaffoldBackgroundColor: Colors.white,
+        backgroundColor: Colors.white,
       ),
       home: const Wrapper(),
     );
