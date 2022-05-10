@@ -12,7 +12,7 @@ class NavBar extends StatefulWidget {
   State<NavBar> createState() => _NavBarState();
 }
 
-class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
+class _NavBarState extends State<NavBar> {
   final _controller = PersistentTabController(initialIndex: 0);
 
   double iconSize = 20; // Icon Size
