@@ -1,17 +1,22 @@
-import 'package:find_fresh_groceries/nav_bar.dart';
+import 'package:find_fresh_groceries/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   // Get API data from https://randomuser.me/api/
   var url = Uri.parse('https://randomuser.me/api/');
   var response = await http.get(url);
 
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
-
   WidgetsFlutterBinding.ensureInitialized();
+
+// Obtain shared preferences.
+  final prefs = await SharedPreferences.getInstance();
+
+// Save to local
+  await prefs.setInt('status', response.statusCode);
+  await prefs.setString('user', response.toString());
 
   // Remove android status bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue, // Primary theme color
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const NavBar(),
+      home: const Wrapper(),
     );
   }
 }
