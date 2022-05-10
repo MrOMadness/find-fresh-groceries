@@ -106,16 +106,13 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print('search val: ' + widget.searchString);
     return FutureBuilder<List>(
         future: getCategories(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var uniqueTypes = getUniqueTypes(snapshot.data);
-            print(tabBarView(uniqueTypes, snapshot.data));
             return DefaultTabController(
               length: uniqueTypes.length,
-              // length: 3,
               child: Scaffold(
                 appBar: AppBar(
                   elevation: 0,

@@ -1,7 +1,9 @@
+import 'package:find_fresh_groceries/models/cart.dart';
 import 'package:find_fresh_groceries/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -21,7 +23,12 @@ void main() async {
   // Remove android status bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
-  runApp(const MyApp()); // Run the app
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartModel(),
+      child: const MyApp(),
+    ),
+  ); // Run the app
 }
 
 class MyApp extends StatelessWidget {
