@@ -16,7 +16,7 @@ class _NavBarState extends State<NavBar> {
   final _controller = PersistentTabController(initialIndex: 0);
 
   double iconSize = 20; // Icon Size
-  static const activeColorPrimary = Color(Styles.greenMain);
+  static const activeColorPrimary = Color(Styles.greenBotNav);
   static const inactiveColorPrimary = Colors.black;
 
   List<Widget> _buildScreens() {
