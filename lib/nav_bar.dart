@@ -1,4 +1,9 @@
+import 'package:find_fresh_groceries/screens/cart.dart';
+import 'package:find_fresh_groceries/screens/home.dart';
+import 'package:find_fresh_groceries/screens/profile.dart';
+import 'package:find_fresh_groceries/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -7,59 +12,87 @@ class NavBar extends StatefulWidget {
   State<NavBar> createState() => _NavBarState();
 }
 
-class _NavBarState extends State<NavBar> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
+class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
+  final _controller = PersistentTabController(initialIndex: 0);
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  double iconSize = 20; // Icon Size
+  static const activeColorPrimary = Color(Styles.greenMain);
+  static const inactiveColorPrimary = Colors.black;
+
+  List<Widget> _buildScreens() {
+    return [
+      const HomeScreen(),
+      const CartScreen(),
+      const ProfileScreen()
+    ]; // Screens
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Image.asset('assets/images/home_icon.png'),
+        iconSize: iconSize,
+        title: ("Home"),
+        textStyle: Styles.roboto10Bold,
+        activeColorPrimary: activeColorPrimary,
+        inactiveColorPrimary: inactiveColorPrimary,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset('assets/images/cart_icon.png'),
+        iconSize: iconSize,
+        title: ("Cart"),
+        textStyle: Styles.roboto10Bold,
+        activeColorPrimary: activeColorPrimary,
+        inactiveColorPrimary: inactiveColorPrimary,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Image.asset('assets/images/profile_icon.png'),
+        iconSize: iconSize,
+        title: ("Profile"),
+        textStyle: Styles.roboto10Bold,
+        activeColorPrimary: activeColorPrimary,
+        inactiveColorPrimary: inactiveColorPrimary,
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+    return PersistentTabView(
+      context,
+      navBarHeight: 70,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Colors.white, // Default is Colors.white.
+      handleAndroidBackButtonPress: true, // Default is true.
+      resizeToAvoidBottomInset:
+          false, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      stateManagement: true, // Default is true.
+      hideNavigationBarWhenKeyboardShows:
+          true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      decoration: const NavBarDecoration(
+        border: Border(
+          top: BorderSide(width: 1.0, color: Color(0xFFDFDFDF)),
+        ),
+        colorBehindNavBar: Colors.white,
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: const ItemAnimationProperties(
+        // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.green[800],
-        onTap: _onItemTapped,
+      screenTransitionAnimation: const ScreenTransitionAnimation(
+        // Screen transition animation on change of selected tab.
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
       ),
+      navBarStyle:
+          NavBarStyle.style14, // Choose the nav bar style with this property.
     );
   }
 }
