@@ -5,6 +5,7 @@ import 'package:find_fresh_groceries/models/catalog.dart';
 import 'package:find_fresh_groceries/screens/error.dart';
 import 'package:find_fresh_groceries/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeCategoriesScreen extends StatefulWidget {
   final String searchString;
@@ -95,6 +96,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                             MaterialStateProperty.all<Color>(Colors.blue),
                       ),
                       onPressed: () {
+                        var cart = context.read<CartModel>();
                         cart.add(catalog);
                       },
                       child: const Text('Buy'),

@@ -14,9 +14,7 @@ class CartModel extends ChangeNotifier {
   /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
   /// cart from the outside.
   void add(Catalog item) {
-    print(item.name);
     _items.add(item);
-    print(_items);
     // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
   }
@@ -28,9 +26,12 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  int count() {
-    return _items.length;
+  String count() {
+    if (_items.length > 99) {
+      return '99+';
+    }
+    return _items.length.toString();
   }
 }
 
-CartModel cart = CartModel();
+// CartModel cartModel = CartModel();
