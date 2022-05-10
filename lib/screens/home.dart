@@ -66,8 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(top: 40),
             child: TextField(
               controller: _controller,
-              onChanged: (String value) {
-                print(value);
+              onSubmitted: (String value) {
+                setState(() {
+                  // Call setState to refresh the page.
+                });
               },
             ),
           ),
@@ -77,7 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 'Categories',
                 style: Styles.roboto14Bold,
               )),
-          const Expanded(child: HomeCategoriesScreen()),
+          Expanded(
+              child: HomeCategoriesScreen(
+            searchString: _controller.text,
+          )),
         ],
       ),
     );

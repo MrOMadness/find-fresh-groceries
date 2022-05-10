@@ -2,84 +2,80 @@
     "results": [
         {
             "name": "Sweet Apple Indonesia",
-            "class": "apple",
+            "type": "apple",
             "price": "25000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
-            "rating": 4
+            "rating": "4"
         },
         {
             "name": "Sweet Apple Canada",
-            "class": "apple",
+            "type": "apple",
             "price": "15000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
-            "rating": 3
+            "rating": "3"
         },
         {
             "name": "Sweet Apple Japan",
-            "class": "apple",
+            "type": "apple",
             "price": "20000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
-            "rating": 3
+            "rating": "3"
         },
         {
             "name": "Sweet Apple India",
-            "class": "apple",
+            "type": "apple",
             "price": "10000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
-            "rating": 2
+            "rating": "2"
         },
         {
             "name": "Sweet Banana Indonesia",
-            "class": "banana",
+            "type": "banana",
             "price": "5000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/bananas_ksgmme.png",
-            "rating": 4
+            "rating": "4"
         },
         {
             "name": "Sweet Banana Canada",
-            "class": "banana",
+            "type": "banana",
             "price": "21000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/bananas_ksgmme.png",
-            "rating": 3
+            "rating": "3"
         },
         {
             "name": "Sweet Banana Japan",
-            "class": "banana",
+            "type": "banana",
             "price": "15000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/bananas_ksgmme.png",
-            "rating": 3
+            "rating": "3"
         },
         {
             "name": "Sweet Orange Indonesia",
-            "class": "orange",
+            "type": "orange",
             "price": "10000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/orange_zp6kov.png",
-            "rating": 4
+            "rating": "4"
         },
         {
             "name": "Sweet Orange Canada",
-            "class": "orange",
+            "type": "orange",
             "price": "12000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/orange_zp6kov.png",
-            "rating": 3
+            "rating": "3"
         },
         {
             "name": "Oraple",
-            "class": "oraple",
+            "type": "oraple",
             "price": "100000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/orange_zp6kov.png",
-            "rating": 5
+            "rating": "5"
         },
         {
             "name": "Banaple",
-            "class": "banaple",
+            "type": "banaple",
             "price": "100000",
             "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/bananas_ksgmme.png",
-            "rating": 5
+            "rating": "5"
         }
-    ],
-    "info": {
-        "version": "1.0",
-        "class_num": 5
-    }
+    ]
 }

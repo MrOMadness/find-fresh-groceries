@@ -1,41 +1,149 @@
+import 'dart:convert';
+
+import 'package:find_fresh_groceries/models/catalog.dart';
+import 'package:find_fresh_groceries/screens/error.dart';
 import 'package:find_fresh_groceries/styles.dart';
 import 'package:flutter/material.dart';
 
 class HomeCategoriesScreen extends StatefulWidget {
-  const HomeCategoriesScreen({Key? key}) : super(key: key);
+  final String searchString;
+  const HomeCategoriesScreen({Key? key, required this.searchString})
+      : super(key: key);
 
   @override
   State<HomeCategoriesScreen> createState() => _HomeCategoriesScreenState();
 }
 
 class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
+  Future<List> getCategories() async {
+    // Obtain shared preferences.
+
+    String data = await DefaultAssetBundle.of(context)
+        .loadString("assets/data/catalog.json");
+    final jsonResult = jsonDecode(data); //latest Dart
+
+    // print(jsonResult['results']);
+
+    var filteredArray = [];
+
+    var list = json
+        .decode(data)['results']
+        .map((data) => Catalog.fromJson(data))
+        .toList();
+
+    for (var val in list) {
+      if (val.name.toLowerCase().contains(widget.searchString.toLowerCase())) {
+        //TODO: create better search func
+        filteredArray.add(val);
+      }
+    }
+
+    return filteredArray; // return your response
+  }
+
+  List getUniqueTypes(data) {
+    var temp = [];
+
+    if (data != null) {
+      for (var val in data) {
+        temp.add(val.type);
+      }
+    }
+    return temp.toSet().toList(); // Returns unique
+  }
+
+  List<Widget> uniqueTabs(uniqueTypes) {
+    List<Widget> arr = [];
+
+    for (var val in uniqueTypes) {
+      arr.add(
+        Tab(
+          icon: SizedBox(width: 100, child: Text(val)), //TODO: Style
+        ),
+      );
+    }
+    return arr;
+  }
+
+  List<Widget> tabBarView(uniqueTypes, data) {
+    List<Widget> categoriesArr = []; // Categories array Ex. => Apple, Orange
+
+    for (var uniqueType in uniqueTypes) {
+      List<Widget> categoriesDataArr =
+          []; // Data in the categories Ex. => Sweet Apple Indonesia, Sweet Apple Canada
+      for (var val in data) {
+        // print(val.type);
+        if (val.type == uniqueType) {
+          // print(val.name);
+          categoriesDataArr.add(
+            Container(
+                padding: const EdgeInsets.only(top: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(val.name),
+                    TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                      ),
+                      onPressed: () {},
+                      child: const Text('Buy'),
+                    )
+                  ],
+                )), //TODO: Style
+          );
+        }
+      }
+      categoriesArr.add(
+        Tab(
+          icon: Column(children: categoriesDataArr), //TODO: Style
+        ),
+      );
+    }
+    return categoriesArr;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: TabBar(
-            indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), // Creates border
-                color: const Color(Styles.greenMain)),
-            tabs: const [
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.directions_transit)),
-              Tab(icon: Icon(Icons.directions_bike)),
-            ],
-          ),
-        ),
-        body: const TabBarView(
-          children: [
-            Icon(Icons.directions_car),
-            Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
-          ],
-        ),
-      ),
-    );
+    // print('search val: ' + widget.searchString);
+    return FutureBuilder<List>(
+        future: getCategories(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var uniqueTypes = getUniqueTypes(snapshot.data);
+            print(tabBarView(uniqueTypes, snapshot.data));
+            return DefaultTabController(
+              length: uniqueTypes.length,
+              // length: 3,
+              child: Scaffold(
+                appBar: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  title: TabBar(
+                    padding: EdgeInsets.zero,
+                    isScrollable: true,
+                    indicator: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(10), // Creates border
+                        color: const Color(Styles.greenMain)),
+                    tabs: uniqueTabs(uniqueTypes),
+                  ),
+                ),
+                body: TabBarView(
+                  children: tabBarView(uniqueTypes, snapshot.data),
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return const ErrorScreen();
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: Text('Loading...'),
+              ),
+            );
+          }
+        });
   }
 }
