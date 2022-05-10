@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:find_fresh_groceries/models/cart.dart';
 import 'package:find_fresh_groceries/models/catalog.dart';
 import 'package:find_fresh_groceries/screens/error.dart';
 import 'package:find_fresh_groceries/styles.dart';
@@ -74,6 +75,12 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
       for (var val in data) {
         // print(val.type);
         if (val.type == uniqueType) {
+          Catalog catalog = Catalog(
+              name: val.name,
+              type: val.type,
+              price: val.price,
+              picture: val.picture,
+              rating: val.rating);
           // print(val.name);
           categoriesDataArr.add(
             Container(
@@ -81,13 +88,15 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(val.name),
+                    Text(catalog.name),
                     TextButton(
                       style: ButtonStyle(
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.blue),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        cart.add(catalog);
+                      },
                       child: const Text('Buy'),
                     )
                   ],
