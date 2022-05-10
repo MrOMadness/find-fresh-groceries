@@ -60,7 +60,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return PersistentTabView(
       context,
-      navBarHeight: 70,
+      navBarHeight: 65,
       controller: _controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
