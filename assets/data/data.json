@@ -1,0 +1,61 @@
+{
+    "results": [
+        {
+            "name": "Sweet Apple Indonesia",
+            "price": "25000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
+            "rating": 4
+        },
+        {
+            "name": "Sweet Apple Canada",
+            "price": "15000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
+            "rating": 3
+        },
+        {
+            "name": "Sweet Apple Japan",
+            "price": "20000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
+            "rating": 3
+        },
+        {
+            "name": "Sweet Apple India",
+            "price": "10000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170216/apple_kuixjo.png",
+            "rating": 2
+        },
+        {
+            "name": "Sweet Banana Indonesia",
+            "price": "5000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/bananas_ksgmme.png",
+            "rating": 4
+        },
+        {
+            "name": "Sweet Banana Canada",
+            "price": "21000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/bananas_ksgmme.png",
+            "rating": 3
+        },
+        {
+            "name": "Sweet Banana Japan",
+            "price": "15000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/bananas_ksgmme.png",
+            "rating": 3
+        },
+        {
+            "name": "Sweet Orange Indonesia",
+            "price": "10000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/orange_zp6kov.png",
+            "rating": 4
+        },
+        {
+            "name": "Sweet Orange Canada",
+            "price": "12000",
+            "picture": "https://res.cloudinary.com/nss-productions/image/upload/v1652170217/orange_zp6kov.png",
+            "rating": 3
+        }
+    ],
+    "info": {
+        "version": "1.0"
+    }
+}
