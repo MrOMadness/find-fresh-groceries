@@ -71,8 +71,8 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
     List<Widget> categoriesArr = []; // Categories array Ex. => Apple, Orange
 
     for (var uniqueType in uniqueTypes) {
-      List<Widget> categoriesDataArr =
-          []; // Data in the categories Ex. => Sweet Apple Indonesia, Sweet Apple Canada
+      // Data in the categories Ex. => Sweet Apple Indonesia, Sweet Apple Canada
+      List<Widget> categoriesDataArr = [];
       for (var val in data) {
         // print(val.type);
         if (val.type == uniqueType) {

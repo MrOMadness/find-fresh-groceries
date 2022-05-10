@@ -33,5 +33,3 @@ class CartModel extends ChangeNotifier {
     return _items.length.toString();
   }
 }
-
-// CartModel cartModel = CartModel();
