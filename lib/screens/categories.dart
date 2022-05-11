@@ -126,10 +126,12 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
               length: uniqueTypes.length,
               child: Scaffold(
                 appBar: AppBar(
+                  toolbarHeight: 0,
                   elevation: 0,
                   backgroundColor: Colors.white,
-                  title: TabBar(
-                    padding: EdgeInsets.zero,
+                  bottom: TabBar(
+                    padding: const EdgeInsets.all(0),
+                    // labelPadding: const EdgeInsets.all(0),
                     isScrollable: true,
                     indicator: BoxDecoration(
                         borderRadius:
