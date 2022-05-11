@@ -10,8 +10,8 @@ class SignatureAppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
         backgroundColor: const Color(Styles.greenMain),
-        elevation: 0,
-        toolbarHeight: 90,
+        elevation: 0, // elevation
+        toolbarHeight: 90, // height
         title: Padding(
           padding: const EdgeInsets.only(left: 20.0),
           child: Text(
@@ -22,5 +22,5 @@ class SignatureAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(90);
+  Size get preferredSize => const Size.fromHeight(90); // height
 }

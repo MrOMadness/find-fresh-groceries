@@ -11,17 +11,18 @@ class Wrapper extends StatelessWidget {
     return FutureBuilder(
         future: checkData(),
         builder: (context, data) {
+          // If Success
           if (data.data == 200) {
-            // If Success
             return const NavBar();
-          } else {
             // If failed
+          } else {
             return const ErrorScreen();
           }
         });
   }
 }
 
+// get data from prefs 'status'. data from user api
 checkData() async {
   final prefs = await SharedPreferences.getInstance();
   return prefs.getInt('status');

@@ -4,6 +4,7 @@ import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class ProfileBoxTemplate extends StatelessWidget {
+  // parameter
   String imagePath;
   String text;
 
@@ -22,10 +23,12 @@ class ProfileBoxTemplate extends StatelessWidget {
       height: 50,
       child: Row(
         children: [
+          // picture
           ClipRRect(
             child: Image.asset(imagePath,
                 height: 30.0, width: 30.0, fit: BoxFit.fill),
           ),
+          // text
           Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: Text(

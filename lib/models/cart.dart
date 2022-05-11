@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:find_fresh_groceries/models/catalog.dart';
 import 'package:flutter/material.dart';
 
+// cart model
 class CartModel extends ChangeNotifier {
   /// Internal, private state of the cart.
   // final List<Catalog> _items = [];
@@ -25,6 +26,7 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // reduce selected item by 1
   void reduceElement(Catalog item) {
     _items.remove(item);
     // This call tells the widgets that are listening to this model to rebuild.
@@ -38,6 +40,7 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // count with limit of 99. if above 99 -> '99+'
   String countWithMax() {
     if (_items.length > 99) {
       return '99+';
@@ -45,10 +48,12 @@ class CartModel extends ChangeNotifier {
     return _items.length.toString();
   }
 
+  // count without limit. can go above 99
   String countNoMax() {
     return _items.length.toString();
   }
 
+  // count category
   Map countPerElement() {
     _items.sort((a, b) => a.name.compareTo(b.name));
 
@@ -60,6 +65,7 @@ class CartModel extends ChangeNotifier {
     return count;
   }
 
+  // count total price
   double totalPrice() {
     double sum = 0;
 
