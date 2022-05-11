@@ -201,7 +201,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                       child: const Text('Buy'),
                     )
                   ],
-                )), //TODO: Style
+                )),
           );
         }
       }
