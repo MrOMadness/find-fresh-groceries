@@ -26,7 +26,7 @@ class _NavBarState extends State<NavBar> {
 
   List<Widget> _buildScreens(user) {
     return [
-      const HomeScreen(),
+      HomeScreen(user: user),
       const CartScreen(),
       ProfileScreen(user: user)
     ]; // Screens
