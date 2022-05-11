@@ -107,9 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButton: Consumer<CartModel>(
           builder: (context, cart, child) {
-            return FloatingActionButton(
+            return FloatingActionButton.extended(
+              elevation: 0,
+              backgroundColor: const Color(Styles.greenMain),
               onPressed: () {},
-              child: Text(cart.countWithMax()),
+              label: Text('Total in cart: ' + cart.countWithMax()),
             );
           },
         ));
