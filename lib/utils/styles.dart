@@ -32,11 +32,23 @@ class Styles {
     fontWeight: FontWeight.w700,
     fontSize: 18,
   );
+  static const TextStyle roboto18Medium = TextStyle(
+    color: Colors.black,
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
   static const TextStyle roboto20BoldWhite = TextStyle(
     color: Colors.white,
     fontFamily: robotoFont,
     fontWeight: FontWeight.w700,
     fontSize: 20,
+  );
+  static const TextStyle roboto16BoldWhite = TextStyle(
+    color: Colors.white,
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
   );
   static const TextStyle roboto14BoldWhite = TextStyle(
     color: Colors.white,

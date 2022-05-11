@@ -38,10 +38,14 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String count() {
+  String countWithMax() {
     if (_items.length > 99) {
       return '99+';
     }
+    return _items.length.toString();
+  }
+
+  String countNoMax() {
     return _items.length.toString();
   }
 

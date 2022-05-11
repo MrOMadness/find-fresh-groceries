@@ -7,7 +7,6 @@ import 'package:find_fresh_groceries/templates/signature_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,45 +29,87 @@ class _CartScreenState extends State<CartScreen> {
         body: Consumer<CartModel>(
           builder: (context, cart, child) {
             return ListView(
-                padding: const EdgeInsets.fromLTRB(
-                    25, 25, 25, 100), // TODO: Ganti botom
+                padding: const EdgeInsets.fromLTRB(25, 25, 25, 95),
                 children: getProductList(cart));
           },
         ),
         floatingActionButton: Consumer<CartModel>(
           builder: (context, cart, child) {
-            return FloatingActionButton(
-              onPressed: () async {
-                // Penyimpanan transaksi produk yang terdapat pada page “cart” dibuat dinamis  dalam local storage.
-                Transaction trx = Transaction(
-                    totalPrice: convertDoubleToCurrency(cart.totalPrice()),
-                    time: DateTime.now().toString(),
-                    trxId: 'trx' +
-                        DateTime.now().millisecondsSinceEpoch.toString() +
-                        cart.totalPrice().toStringAsFixed(0));
+            return SizedBox(
+              width: MediaQuery.of(context).size.width - 32,
+              height: 65,
+              child: FloatingActionButton(
+                elevation: 0,
+                backgroundColor: const Color(Styles.greenMain),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total ' + cart.countNoMax() + ' Item',
+                            style: Styles.roboto16BoldWhite,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(0),
+                            width: 120,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                              color: Colors.white,
+                            )),
+                          ),
+                          Text(
+                            'Rp ' + convertDoubleToCurrency(cart.totalPrice()),
+                            style: Styles.roboto16BoldWhite,
+                          ),
+                        ],
+                      ),
+                      const Text(
+                        'Checkout',
+                        style: Styles.roboto16BoldWhite,
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: () async {
+                  // Penyimpanan transaksi produk yang terdapat pada page “cart” dibuat dinamis  dalam local storage.
+                  Transaction trx = Transaction(
+                      totalPrice: convertDoubleToCurrency(cart.totalPrice()),
+                      time: DateTime.now().toString(),
+                      trxId: 'trx' +
+                          DateTime.now().millisecondsSinceEpoch.toString() +
+                          cart.totalPrice().toStringAsFixed(0));
 
-                // Save to shared
-                List<dynamic> storedArray = [];
-                SharedPreferences pref = await SharedPreferences.getInstance();
+                  // Save to shared
+                  List<dynamic> storedArray = [];
+                  SharedPreferences pref =
+                      await SharedPreferences.getInstance();
 
-                if (pref.getString('transactions') != null) {
-                  // Get from shared
-                  var listString = pref.getString('transactions');
-                  List<dynamic> list = jsonDecode(listString!);
+                  if (pref.getString('transactions') != null) {
+                    // Get from shared
+                    var listString = pref.getString('transactions');
+                    List<dynamic> list = jsonDecode(listString!);
 
-                  for (var json in list) {
-                    storedArray.add(
-                        jsonEncode(json)); // Add transactions to stored array
+                    for (var json in list) {
+                      storedArray.add(
+                          jsonEncode(json)); // Add transactions to stored array
+                    }
                   }
-                }
 
-                storedArray.add(
-                    jsonEncode(trx.toJson())); // add most recent transaction
+                  storedArray.add(
+                      jsonEncode(trx.toJson())); // add most recent transaction
 
-                await pref.setString(
-                    'transactions', storedArray.toString()); // change to string
-              },
-              child: Text(convertDoubleToCurrency(cart.totalPrice())),
+                  await pref.setString('transactions',
+                      storedArray.toString()); // change to string
+                },
+              ),
             );
           },
         ));
@@ -101,19 +142,22 @@ class _CartScreenState extends State<CartScreen> {
                         style: Styles.roboto16BoldLowBlack,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        cart.deleteElement(key.name);
-                      },
-                      icon: const FaIcon(
-                        FontAwesomeIcons.xmark,
-                        color: Colors.red,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: IconButton(
+                        onPressed: () {
+                          cart.deleteElement(key.name);
+                        },
+                        icon: const FaIcon(
+                          FontAwesomeIcons.xmark,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -141,8 +185,8 @@ class _CartScreenState extends State<CartScreen> {
                             padding: const EdgeInsets.fromLTRB(4, 6, 4, 6),
                             child: Text(
                               'Rp ' +
-                                  NumberFormat("###,###", "tr_TR")
-                                      .format(int.parse(key.price)) +
+                                  convertDoubleToCurrency(
+                                      int.parse(key.price)) +
                                   ',-',
                               style: Styles.roboto16MediumLowBlack,
                             ),
@@ -195,7 +239,7 @@ class _CartScreenState extends State<CartScreen> {
                                 child: const Center(
                                   child: Text(
                                     '-',
-                                    style: Styles.roboto18Bold,
+                                    style: Styles.roboto18Medium,
                                   ),
                                 ),
                               )),
@@ -228,92 +272,22 @@ class _CartScreenState extends State<CartScreen> {
                                       Radius.circular(10.0)),
                                 ),
                                 child: const Center(
-                                  child: Text(
-                                    '+',
-                                    style: Styles.roboto18Bold,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 1.0),
+                                    child: Text(
+                                      '+',
+                                      style: Styles.roboto18Medium,
+                                    ),
                                   ),
                                 ),
                               )),
                         ],
                       ),
-                      // Column(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   crossAxisAlignment: CrossAxisAlignment.end,
-                      //   children: [
-                      //     IconButton(
-                      //       onPressed: () {
-                      //         cart.deleteElement(key.name);
-                      //       },
-                      //       icon: const FaIcon(
-                      //         FontAwesomeIcons.xmark,
-                      //         color: Colors.red,
-                      //       ),
-                      //     ),
-                      //     Row(
-                      //       children: [
-                      //         IconButton(
-                      //           onPressed: () {
-                      //             cart.deleteElement(key.name);
-                      //           },
-                      //           icon: const FaIcon(
-                      //             FontAwesomeIcons.xmark,
-                      //             color: Colors.red,
-                      //           ),
-                      //         ),
-                      //         IconButton(
-                      //           onPressed: () {
-                      //             cart.deleteElement(key.name);
-                      //           },
-                      //           icon: const FaIcon(
-                      //             FontAwesomeIcons.xmark,
-                      //             color: Colors.red,
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // )
                     ],
                   ),
                 ),
               ],
             )),
-        //   Row(
-        //   children: [
-        //     Text(key.name + '  '),
-        //     Text(value.toString()),
-        //     TextButton(
-        //       style: ButtonStyle(
-        //         foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-        //       ),
-        //       onPressed: () {
-        //         //TODO
-        //         cart.reduceElement(key);
-        //       },
-        //       child: const Text('-'),
-        //     ),
-        //     TextButton(
-        //       style: ButtonStyle(
-        //         foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-        //       ),
-        //       onPressed: () {
-        //         //TODO
-        //         cart.add(key);
-        //       },
-        //       child: const Text('+'),
-        //     ),
-        //     TextButton(
-        //       style: ButtonStyle(
-        //         foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-        //       ),
-        //       onPressed: () {
-        //         //TODO
-        //         cart.deleteElement(key.name);
-        //       },
-        //       child: const Text('x'),
-        //     )
-        //   ],
-        // )
       );
     });
 

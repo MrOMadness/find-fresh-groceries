@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, cart, child) {
             return FloatingActionButton(
               onPressed: () {},
-              child: Text(cart.count()),
+              child: Text(cart.countWithMax()),
             );
           },
         ));
