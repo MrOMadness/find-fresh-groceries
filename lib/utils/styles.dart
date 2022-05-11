@@ -10,6 +10,7 @@ class Styles {
   static const int backgroundGrey = 0x75EFF3F6;
   static const int borderGrey = 0xffEFF3F6;
   static const int lowBlack = 0xb5000000;
+  static const int hintGrey = 0xffC3BFBF;
 
   static const TextStyle roboto10Bold = TextStyle(
     color: Colors.black,
@@ -47,6 +48,18 @@ class Styles {
   );
   static const TextStyle roboto16BoldLowBlack = TextStyle(
     color: Color(lowBlack),
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+  );
+  static const TextStyle roboto14BoldLowBlack = TextStyle(
+    color: Color(lowBlack),
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
+  );
+  static const TextStyle hintText = TextStyle(
+    color: Color(hintGrey),
     fontFamily: robotoFont,
     fontWeight: FontWeight.w700,
     fontSize: 14,

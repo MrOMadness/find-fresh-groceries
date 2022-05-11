@@ -54,29 +54,49 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(48),
-                    child: Image.network('https://picsum.photos/250?image=9',
+                    child: Image.network(widget.user.pictureSmall,
                         height: 50.0, width: 50.0, fit: BoxFit.fill),
                   )
                 ],
               ),
               Container(
-                color: Colors.white,
-                height: 100,
-                padding: const EdgeInsets.only(top: 40),
-                child: TextField(
-                  controller: _controller,
-                  onSubmitted: (String value) {
-                    setState(() {
-                      // Call setState to refresh the page.
-                    });
-                  },
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(
+                      color: const Color(Styles.borderGrey), width: 1),
+                ),
+                margin: const EdgeInsets.only(top: 60),
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      child: Image.asset('assets/images/search_icon.png',
+                          height: 40.0, width: 40.0, fit: BoxFit.fill),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        decoration: const InputDecoration.collapsed(
+                            hintText: 'Search Groceries',
+                            hintStyle: Styles.hintText),
+                        onSubmitted: (String value) {
+                          setState(() {
+                            // Call setState to refresh the page.
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Container(
-                  padding: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 20),
                   child: const Text(
                     'Categories',
-                    style: Styles.roboto14Bold,
+                    style: Styles.roboto14BoldLowBlack,
                   )),
               Expanded(
                   child: HomeCategoriesScreen(
