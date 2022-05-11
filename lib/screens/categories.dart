@@ -5,6 +5,8 @@ import 'package:find_fresh_groceries/models/catalog.dart';
 import 'package:find_fresh_groceries/screens/error.dart';
 import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeCategoriesScreen extends StatefulWidget {
@@ -17,6 +19,47 @@ class HomeCategoriesScreen extends StatefulWidget {
 }
 
 class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List>(
+        future: getCategories(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var uniqueTypes = getUniqueTypes(snapshot.data);
+            return DefaultTabController(
+              length: uniqueTypes.length,
+              child: Scaffold(
+                appBar: TabBar(
+                  padding: const EdgeInsets.all(0),
+                  isScrollable: true,
+                  indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10), // Creates border
+                      color: const Color(Styles.greenMain)),
+                  unselectedLabelColor: Colors.black,
+                  labelColor: Colors.white,
+                  labelStyle: Styles.roboto14Bold,
+                  tabs: uniqueTabs(uniqueTypes),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: TabBarView(
+                    children: tabBarView(uniqueTypes, snapshot.data),
+                  ),
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return const ErrorScreen();
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: Text('Loading...'),
+              ),
+            );
+          }
+        });
+  }
+
   Future<List> getCategories() async {
     // Obtain shared preferences.
 
@@ -32,7 +75,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
 
     for (var val in list) {
       if (val.name.toLowerCase().contains(widget.searchString.toLowerCase())) {
-        //TODO: create better search func
+        // Search
         filteredArray.add(val);
       }
     }
@@ -55,11 +98,9 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
     List<Widget> arr = [];
 
     for (var val in uniqueTypes) {
-      arr.add(
-        Tab(
-          icon: SizedBox(width: 100, child: Text(val)), //TODO: Style
-        ),
-      );
+      arr.add(Tab(
+        text: val,
+      ));
     }
     return arr;
   }
@@ -71,7 +112,6 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
       // Data in the categories Ex. => Sweet Apple Indonesia, Sweet Apple Canada
       List<Widget> categoriesDataArr = [];
       for (var val in data) {
-        // print(val.type);
         if (val.type == uniqueType) {
           Catalog catalog = Catalog(
               name: val.name,
@@ -79,19 +119,81 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
               price: val.price,
               picture: val.picture,
               rating: val.rating);
-          // print(val.name);
           categoriesDataArr.add(
             Container(
-                padding: const EdgeInsets.only(top: 25),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(
+                      color: const Color(Styles.borderGrey), width: 1),
+                ),
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.all(12),
+                height: 105,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(catalog.name),
-                    TextButton(
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.blue),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(Styles.imgGrey),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(
+                            color: const Color(Styles.borderGrey), width: 1),
                       ),
+                      width: 80,
+                      height: 80,
+                      padding: const EdgeInsets.all(8),
+                      margin: const EdgeInsets.only(right: 12),
+                      child: Image.network(catalog.picture,
+                          height: 60.0, width: 60.0),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            catalog.name,
+                            style: Styles.roboto14Bold,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            'Rp ' +
+                                NumberFormat("###,###", "tr_TR")
+                                    .format(int.parse(catalog.price)) +
+                                '/kg',
+                            style: Styles.roboto16BoldLowBlack,
+                          ),
+                        ),
+                        RatingBarIndicator(
+                          rating: double.parse(catalog.rating),
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          itemCount: int.parse(catalog.rating),
+                          itemSize: 25.0,
+                          direction: Axis.horizontal,
+                        ),
+                      ],
+                    ),
+                    Expanded(child: Container()),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          elevation: null,
+                          shadowColor: null,
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(Styles.greenMain)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ))),
                       onPressed: () {
                         var cart = context.read<CartModel>();
                         cart.add(catalog);
@@ -105,52 +207,10 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
       }
       categoriesArr.add(
         Tab(
-          icon: Column(children: categoriesDataArr), //TODO: Style
+          icon: ListView(children: categoriesDataArr),
         ),
       );
     }
     return categoriesArr;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List>(
-        future: getCategories(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var uniqueTypes = getUniqueTypes(snapshot.data);
-            return DefaultTabController(
-              length: uniqueTypes.length,
-              child: Scaffold(
-                appBar: AppBar(
-                  toolbarHeight: 0,
-                  elevation: 0,
-                  backgroundColor: Colors.white,
-                  bottom: TabBar(
-                    padding: const EdgeInsets.all(0),
-                    // labelPadding: const EdgeInsets.all(0),
-                    isScrollable: true,
-                    indicator: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(10), // Creates border
-                        color: const Color(Styles.greenMain)),
-                    tabs: uniqueTabs(uniqueTypes),
-                  ),
-                ),
-                body: TabBarView(
-                  children: tabBarView(uniqueTypes, snapshot.data),
-                ),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return const ErrorScreen();
-          } else {
-            return const Scaffold(
-              body: Center(
-                child: Text('Loading...'),
-              ),
-            );
-          }
-        });
   }
 }

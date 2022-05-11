@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   border: Border.all(
                       color: const Color(Styles.borderGrey), width: 1),
                 ),
-                margin: const EdgeInsets.only(top: 60),
+                margin: const EdgeInsets.only(top: 50),
                 height: 50,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

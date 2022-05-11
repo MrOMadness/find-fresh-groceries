@@ -47,9 +47,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Find Fresh Groceries', // Title of the app
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue, // Primary theme color
         scaffoldBackgroundColor: Colors.white,
-        backgroundColor: Colors.white,
       ),
       home: const Wrapper(),
     );
