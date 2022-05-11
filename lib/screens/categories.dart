@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:find_fresh_groceries/models/cart.dart';
 import 'package:find_fresh_groceries/models/catalog.dart';
 import 'package:find_fresh_groceries/screens/error.dart';
-import 'package:find_fresh_groceries/styles.dart';
+import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,9 +22,6 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
 
     String data = await DefaultAssetBundle.of(context)
         .loadString("assets/data/catalog.json");
-    final jsonResult = jsonDecode(data); //latest Dart
-
-    // print(jsonResult['results']);
 
     var filteredArray = [];
 
@@ -126,10 +123,12 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
               length: uniqueTypes.length,
               child: Scaffold(
                 appBar: AppBar(
+                  toolbarHeight: 0,
                   elevation: 0,
                   backgroundColor: Colors.white,
-                  title: TabBar(
-                    padding: EdgeInsets.zero,
+                  bottom: TabBar(
+                    padding: const EdgeInsets.all(0),
+                    // labelPadding: const EdgeInsets.all(0),
                     isScrollable: true,
                     indicator: BoxDecoration(
                         borderRadius:
