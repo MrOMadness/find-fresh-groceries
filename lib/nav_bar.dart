@@ -5,7 +5,7 @@ import 'package:find_fresh_groceries/screens/cart.dart';
 import 'package:find_fresh_groceries/screens/error.dart';
 import 'package:find_fresh_groceries/screens/home.dart';
 import 'package:find_fresh_groceries/screens/profile.dart';
-import 'package:find_fresh_groceries/styles.dart';
+import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';

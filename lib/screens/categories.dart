@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:find_fresh_groceries/models/cart.dart';
 import 'package:find_fresh_groceries/models/catalog.dart';
 import 'package:find_fresh_groceries/screens/error.dart';
-import 'package:find_fresh_groceries/styles.dart';
+import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

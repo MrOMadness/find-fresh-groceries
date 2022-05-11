@@ -1,4 +1,4 @@
-import 'package:find_fresh_groceries/styles.dart';
+import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 // Template for app bar that only have back arrow

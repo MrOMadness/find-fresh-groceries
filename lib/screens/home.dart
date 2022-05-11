@@ -1,6 +1,6 @@
 import 'package:find_fresh_groceries/models/cart.dart';
 import 'package:find_fresh_groceries/screens/categories.dart';
-import 'package:find_fresh_groceries/styles.dart';
+import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
