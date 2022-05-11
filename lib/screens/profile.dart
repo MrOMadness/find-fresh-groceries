@@ -5,24 +5,30 @@ import 'package:find_fresh_groceries/templates/signature_appbar.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
+  // parameter to get user
   final User user;
   const ProfileScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // signature app bar with title 'profile'
       appBar: const SignatureAppBar(
         title: 'Profile',
       ),
+      // creates a stack
       body: Stack(
         children: [
+          // stack 1: upper background
           Container(
             height: 163,
             color: const Color(Styles.backgroundGrey),
           ),
+          // stack 2: main content
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // column 1: picture
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -35,12 +41,15 @@ class ProfileScreen extends StatelessWidget {
                       height: 150.0, width: 150.0, fit: BoxFit.fill),
                 ),
               ),
+              // column 2: name
               Center(
                   child: Text(
                 user.fullName,
                 style: Styles.roboto16BoldLowBlack,
               )),
+              // column 3: user data
               Expanded(
+                // background
                 child: Container(
                   margin: const EdgeInsets.only(top: 55),
                   decoration: const BoxDecoration(
@@ -52,12 +61,16 @@ class ProfileScreen extends StatelessWidget {
                   child: ListView(
                     padding: const EdgeInsets.only(top: 55),
                     children: [
+                      // username
                       ProfileBoxTemplate(
                           user.userName, 'assets/images/id_icon.png'),
+                      // email
                       ProfileBoxTemplate(
                           user.email, 'assets/images/email_icon.png'),
+                      // phone
                       ProfileBoxTemplate(
                           user.phone, 'assets/images/phone_icon.png'),
+                      // location
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
