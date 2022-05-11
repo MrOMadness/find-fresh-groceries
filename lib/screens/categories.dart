@@ -1,3 +1,4 @@
+// HomeCategoriesScreen (consists of catalog categories and data)
 import 'dart:convert';
 
 import 'package:find_fresh_groceries/models/cart.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class HomeCategoriesScreen extends StatefulWidget {
+  // Parameter
   final String searchString;
   const HomeCategoriesScreen({Key? key, required this.searchString})
       : super(key: key);
@@ -22,12 +24,15 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
-        future: getCategories(),
+        future:
+            getCategories(), // Function to get categories. will return list category of all data (ex. apple, apple, banana, orange)
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            var uniqueTypes = getUniqueTypes(snapshot.data);
+            // If data exists
+            var uniqueTypes = getUniqueTypes(snapshot
+                .data); // get unique category data (ex. apple, apple, banana => apple, banana)
             return DefaultTabController(
-              length: uniqueTypes.length,
+              length: uniqueTypes.length, // length of the unique category
               child: Scaffold(
                 appBar: TabBar(
                   padding: const EdgeInsets.all(0),
@@ -38,18 +43,23 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                   unselectedLabelColor: Colors.black,
                   labelColor: Colors.white,
                   labelStyle: Styles.roboto14Bold,
-                  tabs: uniqueTabs(uniqueTypes),
+                  tabs: uniqueTabs(uniqueTypes), // unique category data
                 ),
                 body: Padding(
                   padding: const EdgeInsets.only(top: 12.0),
                   child: TabBarView(
-                    children: tabBarView(uniqueTypes, snapshot.data),
+                    children: tabBarView(
+                        uniqueTypes,
+                        snapshot
+                            .data), // Tab bar view. consists of the data in each category
                   ),
                 ),
               ),
             );
+            // If there is error
           } else if (snapshot.hasError) {
             return const ErrorScreen();
+            // If dont have data
           } else {
             return const Scaffold(
               body: Center(
@@ -68,19 +78,20 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
 
     var filteredArray = [];
 
+    // Deocde to list
     var list = json
         .decode(data)['results']
         .map((data) => Catalog.fromJson(data))
         .toList();
 
     for (var val in list) {
+      // Search algoritm
       if (val.name.toLowerCase().contains(widget.searchString.toLowerCase())) {
-        // Search
         filteredArray.add(val);
       }
     }
 
-    return filteredArray; // return your response
+    return filteredArray;
   }
 
   List getUniqueTypes(data) {
@@ -94,6 +105,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
     return temp.toSet().toList(); // Returns unique
   }
 
+  // widget list of tab with unique category data
   List<Widget> uniqueTabs(uniqueTypes) {
     List<Widget> arr = [];
 
@@ -105,6 +117,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
     return arr;
   }
 
+  // widget list of tabbarview
   List<Widget> tabBarView(uniqueTypes, data) {
     List<Widget> categoriesArr = []; // Categories array Ex. => Apple, Orange
 
@@ -112,14 +125,18 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
       // Data in the categories Ex. => Sweet Apple Indonesia, Sweet Apple Canada
       List<Widget> categoriesDataArr = [];
       for (var val in data) {
+        // if data category is the same with tab category
         if (val.type == uniqueType) {
+          // create catalog class
           Catalog catalog = Catalog(
               name: val.name,
               type: val.type,
               price: val.price,
               picture: val.picture,
               rating: val.rating);
+          // add to categoriesDataArr
           categoriesDataArr.add(
+            // outer box
             Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -130,10 +147,12 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                 margin: const EdgeInsets.only(top: 10),
                 padding: const EdgeInsets.all(12),
                 height: 105,
+                // Row inside of the box
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    // Row 1. Picture
                     Container(
                       decoration: BoxDecoration(
                         color: const Color(Styles.imgGrey),
@@ -149,10 +168,12 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                       child: Image.network(catalog.picture,
                           height: 60.0, width: 60.0),
                     ),
+                    // Row 2. name, price, rating
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // column 1. name
                         Padding(
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Text(
@@ -160,6 +181,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                             style: Styles.roboto14Bold,
                           ),
                         ),
+                        // column 2. price
                         Padding(
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Text(
@@ -170,6 +192,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                             style: Styles.roboto16BoldLowBlack,
                           ),
                         ),
+                        // column 3. rating
                         RatingBarIndicator(
                           rating: double.parse(catalog.rating),
                           itemBuilder: (context, index) => const Icon(
@@ -182,7 +205,9 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                         ),
                       ],
                     ),
+                    // Row 3. expanded container to make the next row become right aligned
                     Expanded(child: Container()),
+                    // row 4. buy button
                     ElevatedButton(
                       style: ButtonStyle(
                           elevation: null,
@@ -195,7 +220,9 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                             borderRadius: BorderRadius.circular(10.0),
                           ))),
                       onPressed: () {
+                        // get cart
                         var cart = context.read<CartModel>();
+                        // add catalog
                         cart.add(catalog);
                       },
                       child: const Text('Buy'),
@@ -205,6 +232,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
           );
         }
       }
+      // the parent of categoriesDataArr
       categoriesArr.add(
         Tab(
           icon: ListView(children: categoriesDataArr),

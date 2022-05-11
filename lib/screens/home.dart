@@ -16,12 +16,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _controller;
 
+// Init State
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
   }
 
+// Dispose
   @override
   void dispose() {
     _controller.dispose();
@@ -32,14 +34,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(35, 88, 35, 35),
+          padding: const EdgeInsets.fromLTRB(
+              35, 88, 35, 35), // Padding of the whole screen
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // First column: title and picture
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // First row: title
                   RichText(
                     text: const TextSpan(
                       style: Styles.roboto24Green,
@@ -52,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  // Second row: picture
                   ClipRRect(
                     borderRadius: BorderRadius.circular(48),
                     child: Image.network(widget.user.pictureSmall,
@@ -59,7 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               ),
+              // Second column: Search bar
               Container(
+                // Search box
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -72,10 +80,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // search icon
                     ClipRRect(
                       child: Image.asset('assets/images/search_icon.png',
                           height: 40.0, width: 40.0, fit: BoxFit.fill),
                     ),
+                    // search field
                     Expanded(
                       child: TextField(
                         controller: _controller,
@@ -92,12 +102,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              // Third column: 'Categories' text
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 20),
                   child: const Text(
                     'Categories',
                     style: Styles.roboto14BoldLowBlack,
                   )),
+              // Forth column: HomeCategoriesScreen (consists of catalog categories and data)
               Expanded(
                   child: HomeCategoriesScreen(
                 searchString: _controller.text,
@@ -105,13 +117,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation
+            .centerFloat, // Center floating action button
         floatingActionButton: Consumer<CartModel>(
+          // Builder to receive cart class
           builder: (context, cart, child) {
+            // Floating action button
             return FloatingActionButton.extended(
+              heroTag: "btn2",
               elevation: 0,
               backgroundColor: const Color(Styles.greenMain),
               onPressed: () {},
-              label: Text('Total in cart: ' + cart.countWithMax()),
+              label: Text('Total in cart: ' +
+                  cart.countWithMax()), // Get count in cart with max value of 99 (text changes to 99+ if > 99)
             );
           },
         ));

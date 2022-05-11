@@ -25,13 +25,16 @@ void main() async {
   final parsedJson = jsonDecode(response.body);
 
 // Save to local
-  await prefs.setInt('status', response.statusCode);
-  await prefs.setString('user', jsonEncode(parsedJson['results'][0]));
+  await prefs.setInt('status', response.statusCode); // set the status
+  await prefs.setString(
+      'user', jsonEncode(parsedJson['results'][0])); // set data
 
   // Remove android status bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
+  // run app
   runApp(
+    // providider plugin to detect change on cart
     ChangeNotifierProvider(
       create: (context) => CartModel(),
       child: const MyApp(),

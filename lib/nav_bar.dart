@@ -18,6 +18,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
+  // tab controller
   final _controller = PersistentTabController(initialIndex: 0);
 
   double iconSize = 20; // Icon Size
@@ -34,6 +35,7 @@ class _NavBarState extends State<NavBar> {
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
+      // home
       PersistentBottomNavBarItem(
         icon: Image.asset('assets/images/home_icon.png'),
         iconSize: iconSize,
@@ -42,6 +44,7 @@ class _NavBarState extends State<NavBar> {
         activeColorPrimary: activeColorPrimary,
         inactiveColorPrimary: inactiveColorPrimary,
       ),
+      // cart
       PersistentBottomNavBarItem(
         icon: Image.asset('assets/images/cart_icon.png'),
         iconSize: iconSize,
@@ -50,6 +53,7 @@ class _NavBarState extends State<NavBar> {
         activeColorPrimary: activeColorPrimary,
         inactiveColorPrimary: inactiveColorPrimary,
       ),
+      // profile
       PersistentBottomNavBarItem(
         icon: Image.asset('assets/images/profile_icon.png'),
         iconSize: iconSize,
@@ -63,27 +67,10 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    Future<User> getUser() async {
-      // Obtain shared preferences.
-      final prefs = await SharedPreferences.getInstance();
-      var jsonString = prefs.getString('user');
-      var list = json.decode(jsonString!);
-      User user = User(
-          fullName: '${list['name']['first']} ${list['name']['last']}',
-          userName: list['login']['username'],
-          email: list['email'],
-          phone: list['phone'],
-          pictureSmall: list['picture']['thumbnail'],
-          pictureLarge: list['picture']['large'],
-          address:
-              '${list['location']['city']} - ${list['location']['postcode']}',
-          province: list['location']['state']);
-      return user;
-    }
-
     return FutureBuilder<Object>(
-        future: getUser(),
+        future: getUser(), // get user from share pref
         builder: (context, userSnapshot) {
+          // if have data
           if (userSnapshot.hasData) {
             return PersistentTabView(
               context,
@@ -121,8 +108,10 @@ class _NavBarState extends State<NavBar> {
               navBarStyle: NavBarStyle
                   .style14, // Choose the nav bar style with this property.
             );
+            // if error
           } else if (userSnapshot.hasError) {
             return const ErrorScreen();
+            // if no data
           } else {
             return const Scaffold(
               body: Center(
@@ -131,5 +120,26 @@ class _NavBarState extends State<NavBar> {
             );
           }
         });
+  }
+
+  Future<User> getUser() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    // get user string
+    var jsonString = prefs.getString('user');
+    // convert to list
+    var list = json.decode(jsonString!);
+    // convert to User class
+    User user = User(
+        fullName: '${list['name']['first']} ${list['name']['last']}',
+        userName: list['login']['username'],
+        email: list['email'],
+        phone: list['phone'],
+        pictureSmall: list['picture']['thumbnail'],
+        pictureLarge: list['picture']['large'],
+        address:
+            '${list['location']['city']} - ${list['location']['postcode']}',
+        province: list['location']['state']);
+    return user;
   }
 }
