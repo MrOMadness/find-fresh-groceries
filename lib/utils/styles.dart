@@ -45,4 +45,10 @@ class Styles {
     fontWeight: FontWeight.w500,
     fontSize: 14,
   );
+  static const TextStyle roboto16BoldLowBlack = TextStyle(
+    color: Color(lowBlack),
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 14,
+  );
 }

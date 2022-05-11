@@ -38,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
               Center(
                   child: Text(
                 user.fullName,
-                style: Styles.roboto14Bold,
+                style: Styles.roboto16BoldLowBlack,
               )),
               Expanded(
                 child: Container(
