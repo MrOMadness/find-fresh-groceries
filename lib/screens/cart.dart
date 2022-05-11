@@ -58,15 +58,24 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Cart Product"),
-      ),
-      body: Consumer<CartModel>(
-        builder: (context, cart, child) {
-          print(cart.items);
-          return ListView(children: getProductList(cart));
-        },
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Cart Product"),
+        ),
+        body: Consumer<CartModel>(
+          builder: (context, cart, child) {
+            print(cart.items);
+            return ListView(children: getProductList(cart));
+          },
+        ),
+        floatingActionButton: Consumer<CartModel>(
+          builder: (context, cart, child) {
+            return FloatingActionButton(
+              onPressed: () {
+                //TODO: save
+              },
+              child: Text(cart.totalPrice().toString()),
+            );
+          },
+        ));
   }
 }

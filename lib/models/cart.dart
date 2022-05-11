@@ -57,4 +57,14 @@ class CartModel extends ChangeNotifier {
     }
     return map;
   }
+
+  double totalPrice() {
+    double sum = 0;
+
+    for (var element in _items) {
+      sum += double.parse(element.price);
+    }
+
+    return sum;
+  }
 }
