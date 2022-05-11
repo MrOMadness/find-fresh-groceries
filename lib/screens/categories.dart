@@ -22,9 +22,6 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
 
     String data = await DefaultAssetBundle.of(context)
         .loadString("assets/data/catalog.json");
-    final jsonResult = jsonDecode(data); //latest Dart
-
-    // print(jsonResult['results']);
 
     var filteredArray = [];
 

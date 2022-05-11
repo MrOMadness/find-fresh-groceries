@@ -68,7 +68,6 @@ class _CartScreenState extends State<CartScreen> {
         ),
         body: Consumer<CartModel>(
           builder: (context, cart, child) {
-            print(cart.items);
             return ListView(children: getProductList(cart));
           },
         ),
