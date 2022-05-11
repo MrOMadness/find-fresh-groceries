@@ -44,6 +44,7 @@ class _CartScreenState extends State<CartScreen> {
               width: MediaQuery.of(context).size.width - 32, // full width
               height: 65,
               child: FloatingActionButton(
+                heroTag: "btn1",
                 elevation: 0,
                 backgroundColor: const Color(Styles.greenMain),
                 shape: const RoundedRectangleBorder(

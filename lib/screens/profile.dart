@@ -1,8 +1,11 @@
 import 'package:find_fresh_groceries/models/user.dart';
+import 'package:find_fresh_groceries/screens/history.dart';
 import 'package:find_fresh_groceries/templates/profile_box.dart';
 import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:find_fresh_groceries/templates/signature_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ProfileScreen extends StatelessWidget {
   // parameter to get user
@@ -13,8 +16,24 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // signature app bar with title 'profile'
-      appBar: const SignatureAppBar(
+      appBar: SignatureAppBar(
         title: 'Profile',
+        // history action widget
+        actionWidget: IconButton(
+          icon: const FaIcon(
+            FontAwesomeIcons.clockRotateLeft,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            // to history page
+            pushNewScreen(
+              context,
+              screen: const HistoryScreen(),
+              withNavBar: false, // OPTIONAL VALUE. True by default.
+              pageTransitionAnimation: PageTransitionAnimation.cupertino,
+            );
+          },
+        ),
       ),
       // creates a stack
       body: Stack(

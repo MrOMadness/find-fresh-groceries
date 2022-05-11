@@ -124,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, cart, child) {
             // Floating action button
             return FloatingActionButton.extended(
+              heroTag: "btn2",
               elevation: 0,
               backgroundColor: const Color(Styles.greenMain),
               onPressed: () {},
