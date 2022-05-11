@@ -12,6 +12,7 @@ class Styles {
   static const int lowBlack = 0xb5000000;
   static const int hintGrey = 0xffC3BFBF;
   static const int imgGrey = 0xffE5E5E5;
+  static const int white = 0xffffffff;
 
   static const TextStyle roboto10Bold = TextStyle(
     color: Colors.black,
@@ -25,11 +26,29 @@ class Styles {
     fontWeight: FontWeight.w700,
     fontSize: 14,
   );
+  static const TextStyle roboto18Bold = TextStyle(
+    color: Colors.black,
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 18,
+  );
+  static const TextStyle roboto18Medium = TextStyle(
+    color: Colors.black,
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+  );
   static const TextStyle roboto20BoldWhite = TextStyle(
     color: Colors.white,
     fontFamily: robotoFont,
     fontWeight: FontWeight.w700,
     fontSize: 20,
+  );
+  static const TextStyle roboto16BoldWhite = TextStyle(
+    color: Colors.white,
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
   );
   static const TextStyle roboto14BoldWhite = TextStyle(
     color: Colors.white,
@@ -52,6 +71,12 @@ class Styles {
     fontFamily: robotoFont,
     fontWeight: FontWeight.w500,
     fontSize: 14,
+  );
+  static const TextStyle roboto16MediumLowBlack = TextStyle(
+    color: Color(lowBlack),
+    fontFamily: robotoFont,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
   );
   static const TextStyle roboto16BoldLowBlack = TextStyle(
     color: Color(lowBlack),

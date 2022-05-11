@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:find_fresh_groceries/models/cart.dart';
 import 'package:find_fresh_groceries/models/catalog.dart';
+import 'package:find_fresh_groceries/public/functions.dart';
 import 'package:find_fresh_groceries/screens/error.dart';
 import 'package:find_fresh_groceries/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeCategoriesScreen extends StatefulWidget {
@@ -164,8 +164,8 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Text(
                             'Rp ' +
-                                NumberFormat("###,###", "tr_TR")
-                                    .format(int.parse(catalog.price)) +
+                                convertDoubleToCurrency(
+                                    int.parse(catalog.price)) +
                                 '/kg',
                             style: Styles.roboto16BoldLowBlack,
                           ),
@@ -201,7 +201,7 @@ class _HomeCategoriesScreenState extends State<HomeCategoriesScreen> {
                       child: const Text('Buy'),
                     )
                   ],
-                )), //TODO: Style
+                )),
           );
         }
       }

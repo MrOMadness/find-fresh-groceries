@@ -82,6 +82,7 @@ class ProfileScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 12.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     user.province,
