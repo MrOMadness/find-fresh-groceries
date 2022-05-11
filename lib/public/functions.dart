@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 String convertDoubleToCurrency(number) {
   final format = NumberFormat.currency(
-      // locale: 'eu',
+      locale: 'tr_TR',
       customPattern: '#,### \u00a4',
       symbol: 'IDR',
       decimalDigits: 2);
