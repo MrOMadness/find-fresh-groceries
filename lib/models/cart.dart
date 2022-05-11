@@ -46,16 +46,14 @@ class CartModel extends ChangeNotifier {
   }
 
   Map countPerElement() {
-    var map = {};
+    _items.sort((a, b) => a.name.compareTo(b.name));
 
-    for (var element in _items) {
-      if (!map.containsKey(element)) {
-        map[element] = 1;
-      } else {
-        map[element] += 1;
-      }
+    Map count = {};
+    for (var i in _items) {
+      count[i] = (count[i] ?? 0) + 1;
     }
-    return map;
+
+    return count;
   }
 
   double totalPrice() {
